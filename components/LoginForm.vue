@@ -4,11 +4,12 @@
       <div class="">
         <label class="label">Email address</label>
         <input
+          inputmode="email"
           type="email"
           v-model="email"
           class="form-control"
           v-bind:class="{
-                wrong: couldNotFindUser == true,
+            wrong: couldNotFindUser == true,
           }"
           placeholder="Enter email"
           required
@@ -21,7 +22,7 @@
           v-model="password"
           class="form-control"
           v-bind:class="{
-                wrong: passwordDoesNotMatch == true,
+            wrong: passwordDoesNotMatch == true,
           }"
           id="exampleInputPassword1"
           placeholder="Password"
@@ -31,7 +32,9 @@
           <p class="credentials-taken">Wrong password!</p>
         </div>
         <div v-if="couldNotFindUser">
-          <p class="credentials-taken">Could not a find a user with that email!</p>
+          <p class="credentials-taken">
+            Could not a find a user with that email!
+          </p>
         </div>
         <div class="">
           <NuxtLink class="link" to="/login/registration"
@@ -45,7 +48,10 @@
         type="submit"
         id="global-button"
         class="btn"
-        v-bind:class="{ globalBtnActive: email.length > 0 && password.length > 0, globalBtnInactive: email.length == 0 || password.length == 0 }"
+        v-bind:class="{
+          globalBtnActive: email.length > 0 && password.length > 0,
+          globalBtnInactive: email.length == 0 || password.length == 0,
+        }"
       >
         LOGIN
       </button>
@@ -82,13 +88,19 @@ export default {
           .catch((error) => {
             if (error.code == 'auth/wrong-password') {
               // Do this
-              return (vm.passwordDoesNotMatch = true, vm.couldNotFindUser = false)
+              return (
+                (vm.passwordDoesNotMatch = true), (vm.couldNotFindUser = false)
+              )
             } else if (error.code == 'auth/user-not-found') {
               // Do that
-              return (vm.couldNotFindUser = true, vm.passwordDoesNotMatch = false)
+              return (
+                (vm.couldNotFindUser = true), (vm.passwordDoesNotMatch = false)
+              )
             } else {
               console.log(error.code)
-              return (vm.couldNotFindUser = false, vm.passwordDoesNotMatch = false)
+              return (
+                (vm.couldNotFindUser = false), (vm.passwordDoesNotMatch = false)
+              )
             }
             // "auth/wrong-password"
             // "auth/user-not-found"
@@ -126,13 +138,12 @@ input {
 }
 
 input:active {
-  border: solid white 1px
+  border: solid white 1px;
 }
 
 .wrong {
   border: solid rgb(255, 0, 0) 1px;
 }
-
 
 .form {
   color: white;
@@ -172,15 +183,23 @@ input:active {
   z-index: 1;
 }
 
-.form-control:focus, .form-control:active, text-area:focus, text-area:active, input:focus, input:active {
+.form-control:focus,
+.form-control:active,
+text-area:focus,
+text-area:active,
+input:focus,
+input:active {
   box-shadow: none;
   outline: 0;
   outline-style: none;
 }
 
-button.active.focus, button.active:focus,
-button.focus, button:active.focus, 
-button:active:focus, button:focus {
+button.active.focus,
+button.active:focus,
+button.focus,
+button:active.focus,
+button:active:focus,
+button:focus {
   outline: none;
   box-shadow: none;
 }

@@ -95,6 +95,15 @@ h2 {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+@media only screen and (min-width: 800px) {
+  .registraion-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   padding-bottom: 15rem;
+}
 }
 </style>

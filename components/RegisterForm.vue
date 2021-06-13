@@ -6,6 +6,7 @@
           <label for="exampleInputEmail1" class="label">Email address</label>
           <input
             type="email"
+            inputmode="email"
             v-model="email"
             class="form-control"
             id="exampleInputEmail1"
@@ -206,7 +207,7 @@ input {
   flex-direction: column;
   justify-content: space-between;
   height: 28rem;
-  width: 70%;
+  width: 80%;
   max-width: 20rem;
   padding: 1rem;
   border-radius: 0.2rem;
