@@ -6,6 +6,10 @@ export default {
       process.env.CLIENT_SECRET || '6114c9e48288227b4226e904c2712e72',
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
+
+  // Target
+  target: 'static', 
+
   head: {
     title: 'examensarbete',
     htmlAttrs: {
