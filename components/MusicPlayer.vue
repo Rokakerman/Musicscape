@@ -42,15 +42,18 @@ export default {
 }
 
 audio {
-  background-color: blue;
-  border-radius: 2rem;
+  background-color: #8a86ff;
+  border-radius: 0;
   width: 100%;
-  margin-bottom: 5rem;
+  position: fixed;
+  bottom: 3rem;
 }
 
 @media only screen and (min-width: 770px) {
   audio {
     width: 50rem;
+    border-radius: 2rem;
+    bottom: 2rem;
   }
 }
 </style>

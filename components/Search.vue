@@ -209,15 +209,20 @@ header h1 {
 
 #app-instasearch {
   place-self: center;
-  margin-top: 1.875rem;
   width: 37.5rem;
+  position: fixed;
+  top: 0;
+  z-index: 50;
 }
+
 
 .input-container {
   max-width: 70%;
   border-radius: 0.3125rem;
   background: #1e1133;
   padding: 0.625rem;
+  position: fixed;
+  z-index: 50;
 }
 
 .input-container input {
@@ -303,7 +308,6 @@ ul {
     margin-right: 0;
     padding: 0;
     position: relative;
-    top: -2rem;
     max-width: 100%;
     width: 100vw;
   }
@@ -363,13 +367,12 @@ ul {
     z-index: 50;
   }
 }
-@media only screen and (max-width: 48.125rem){
-#list-group[data-v-7a642ec3] {
+@media only screen and (max-width: 48.125rem) {
+  #list-group[data-v-7a642ec3] {
     max-width: 100%;
     position: relative;
     top: -2rem;
-        z-index: 50;
-
-}
+    z-index: 50;
+  }
 }
 </style>

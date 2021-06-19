@@ -1,28 +1,27 @@
 <template>
-  <div id="main">
+  <div class="home-container">
+    <h1>Latest playlists last 24 hours</h1>
     <ul id="v-for-object">
-      <h1>Latest playlists last 24 hours</h1>
-      <li v-for="(value, index) in playLists" :key="index" class="list">
-        <b-card
-          :title="value.name"
-          class="b-card-title text-center"
-          header-class="card_header"
-        >
-          <b-button
-            v-bind:href="value.shorturl"
-            target="_blank"
-            variant="primary"
-            >Go to playlist <img src="~/assets/arrow-right_white.svg"
-          /></b-button>
-          <b-button
-            v-bind:href="value.zip"
-            variant="primary"
-            header-class="card_header"
-            >Download <img src="~/assets/downloadbutton_white.svg"
-          /></b-button>
-        </b-card>
+      <li
+        v-for="(value, index) in playLists"
+        :key="index"
+        class="playlist-item"
+      >
+        <article class="playlist-preview card">
+          <button v-bind:href="value.shorturl" target="_blank">
+            Go to playlist <img src="~/assets/arrow-right_white.svg" />
+          </button>
+          <button v-bind:href="value.zip">
+            Download <img src="~/assets/downloadbutton_white.svg" />
+          </button>
+        </article>
+        <footer class="playlist-info">
+          <p class="mini-text">{{ value.name | textTruncate() }}</p>
+          <p class="mini-text">{{ value.user_name | textTruncate() }}</p>
+        </footer>
       </li>
     </ul>
+    <footer class="home-footer"></footer>
   </div>
 </template>
 
@@ -33,6 +32,22 @@ export default {
     return {
       playLists: {},
     }
+  },
+  filters: {
+    textTruncate: function (str) {
+      let length = str.length
+      let ending = '...'
+      console.log('hi')
+
+      if (length > 25) {
+        console.log(str)
+        let newStr = str.slice(0, 25)
+        console.log('hi')
+        return newStr.concat(ending)
+      } else {
+        return str
+      }
+    },
   },
   methods: {
     getPlaylist() {
@@ -76,7 +91,6 @@ export default {
           // handle success
           console.log(response)
           vm.playLists = response.data.results
-          console.log(JSON.stringify(vm.playLists))
         })
         .catch(function (error) {
           // handle error
@@ -103,19 +117,88 @@ export default {
 }
 </script>
 
-<style>
-.list {
-  list-style: none;
+<style scoped>
+.home-container {
+  margin-bottom: auto;
+  padding-top: 2rem;
+}
 
-  margin-top: 1rem;
+.title-header {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+  margin-top: 2rem;
+  display: grid;
+  grid-row-gap: 2rem;
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-between;
+}
+
+article {
+  display: flex;
+  flex-direction: row;
+  padding: 0rem 0rem 01rem 0rem;
+  justify-content: space-around;
+}
+
+.playlist-item {
+  list-style: none;
+  height: 10rem;
+  width: 9rem;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.playlist-preview {
+  height: 80%;
+  width: 100%;
+  list-style: none;
+  margin: 0px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+button {
+  border-radius: 0.2rem;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  color: white;
+}
+
+.playlist-info {
+  height: 20%;
+  width: 97%;
+  padding-top: 0.2rem;
+  background-color: transparent;
+}
+
+.mini-text {
+  margin: 0px;
+  font-size: 11px;
+  color: #00ddff;
+  text-align: start;
+  width: max-content;
+}
+
+.home-footer {
+  height: 9rem;
 }
 
 @media only screen and (max-width: 770px) {
-  .list {
-  }
-
   b-card {
     margin-top: 2rem;
   }
