@@ -16,11 +16,12 @@
           </button>
         </article>
         <footer class="playlist-info">
-          <p class="mini-text">{{ value.name }}</p>
-          <p class="mini-text">{{ value.user_name }}</p>
+          <p class="mini-text">{{ value.name | textTruncate() }}</p>
+          <p class="mini-text">{{ value.user_name | textTruncate() }}</p>
         </footer>
       </li>
     </ul>
+    <footer class="home-footer"></footer>
   </div>
 </template>
 
@@ -31,6 +32,22 @@ export default {
     return {
       playLists: {},
     }
+  },
+  filters: {
+    textTruncate: function (str) {
+      let length = str.length
+      let ending = '...'
+      console.log('hi')
+
+      if (length > 25) {
+        console.log(str)
+        let newStr = str.slice(0, 25)
+        console.log('hi')
+        return newStr.concat(ending)
+      } else {
+        return str
+      }
+    },
   },
   methods: {
     getPlaylist() {
@@ -74,7 +91,6 @@ export default {
           // handle success
           console.log(response)
           vm.playLists = response.data.results
-          console.log(JSON.stringify(vm.playLists))
         })
         .catch(function (error) {
           // handle error
@@ -101,7 +117,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .home-container {
   margin-bottom: auto;
   padding-top: 2rem;
@@ -119,6 +135,10 @@ ul {
   margin: 0px;
   padding: 0px;
   margin-top: 2rem;
+  display: grid;
+  grid-row-gap: 2rem;
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-between;
 }
 
 article {
@@ -171,12 +191,14 @@ button {
   font-size: 11px;
   color: #00ddff;
   text-align: start;
+  width: max-content;
+}
+
+.home-footer {
+  height: 9rem;
 }
 
 @media only screen and (max-width: 770px) {
-  .list {
-  }
-
   b-card {
     margin-top: 2rem;
   }

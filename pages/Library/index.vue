@@ -473,7 +473,7 @@ main {
 }
 
 footer {
-  height: 6rem;
+  height: 9rem;
   background-color: transparent;
   color: #00ddff;
 }
