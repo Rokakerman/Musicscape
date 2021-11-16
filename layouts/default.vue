@@ -3,8 +3,9 @@
     <div class="layout">
       <Nav :showInput="showSearchBar" v-on:showsearch="showSearch()" />
       <Nuxt />
+      <footer class="audio-footer">
       <MusicPlayer />
-
+      </footer>
       <LazyMobileNav v-on:showsearch="showSearch()" />
     </div>
   </div>
@@ -93,5 +94,18 @@ body {
 .globalBtnInactive:hover {
   background-color: #17a2b89e;
   color: white;
+}
+
+@media only screen and (min-width: 770px) {
+  .audio-footer {
+    width: 100%;
+    background-color: #1e1133;
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>
