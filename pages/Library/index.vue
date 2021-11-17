@@ -502,12 +502,14 @@ footer {
     display: flex;
     justify-content: center;
     min-height: 55rem;
+    height: max-content;
   }
 
   .desktop-container {
     width: 90vw;
     background-color: transparent;
     height: max-content;
+    margin-bottom: 0rem;
   }
 
   .playlists-grid {
@@ -539,7 +541,7 @@ footer {
 
 @media only screen and (min-width: 1200px) {
   .mobile-footer {
-    height: 0%;
+    height: 9rem;
   }
 
   .library {
