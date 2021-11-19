@@ -8,12 +8,12 @@
         class="playlist-item"
       >
         <article class="playlist-preview card">
-          <button v-bind:href="value.shorturl" target="_blank">
-            Go to playlist <img src="~/assets/arrow-right_white.svg" />
-          </button>
-          <button v-bind:href="value.zip">
+          <a class="playlist-redirect"  v-bind:href="value.shorturl" target="_blank">
+           Go to playlist <img src="~/assets/arrow-right_white.svg" />
+          </a>
+          <a class="playlist-redirect" v-bind:href="value.zip" target="_blank">
             Download <img src="~/assets/downloadbutton_white.svg" />
-          </button>
+          </a>
         </article>
         <footer class="playlist-info">
           <p class="mini-text">{{ value.name | textTruncate() }}</p>
@@ -169,6 +169,14 @@ article {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+.playlist-redirect {
+  border-radius: 0.2rem;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  color: white;
 }
 
 button {

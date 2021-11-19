@@ -38,6 +38,7 @@ export default {
 <style scoped>
 .media-controls {
   display: flex;
+  width: 100%;
   justify-content: center;
 }
 
@@ -51,9 +52,22 @@ audio {
 
 @media only screen and (min-width: 770px) {
   audio {
-    width: 50rem;
-    border-radius: 2rem;
-    bottom: 2rem;
+    width: 100%;
+    border-radius: 0rem;
+    bottom: 0rem;
+    position: relative;
+    border: solid 1px white;
+    border-top: 0px;
+    border-bottom: 0px;
+  }
+}
+
+@media only screen and (min-width: 770px) {
+  .media-controls {
+    width: 80%;
+    max-width: 50rem;
+    bottom: 0rem;
+    position: relative;
   }
 }
 </style>
