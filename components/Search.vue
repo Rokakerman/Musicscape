@@ -4,50 +4,41 @@
       <div class="input-container">
         <input
           class="input-field"
-          @click="displayComponent"
           type="text"
           placeholder="search..."
           v-model="term"
         />
-        <b-button @click="search" type="button" class="btn btn-outline-primary"
-          >Search
-        </b-button>
-        <b-button
-          v-bind:class="{ active: isActive }"
-          @click="hideComponent"
-          size="sm"
-          class="my-2 my-sm-0"
-          type="submit"
-          >Hide list</b-button
-        >
       </div>
 
       <div
-        v-bind:class="{ active: isActive }"
+        v-bind:class="{ active: isActive, inactive: !isActive }"
         id="list-group"
         tag="ul"
         name="list-animation"
       >
-        <b-card class="mb-2" v-for="result in results" :key="result.id">
-          <!--create click function to share button-->
+        <div class="mb-2" v-for="result in results" :key="result.id">
+          <header class="result-item-header">
+            <img class="card" v-bind:src="result.image" />
+            <p class="p author">{{ result.album_name }}</p>
+          </header>
+        
+          <footer class="result-item-footer">
+            <button
+              id="play-btn"
+              @click="
+                $store.commit('setMusic', {
+                  url: result.audio,
+                })"
+            >
+              &#9658; Play Sample
+            </button>
 
-          <img v-bind:src="result.image" />
-          <span class="author">{{ result.album_name }}</span>
-          <button
-            @click="
-              $store.commit('setMusic', {
-                url: result.audio,
-              })
-            "
-          >
-            &#9658; Play Sample
-          </button>
-
-          <b-button @click="addTrack(result.id)"> add to library </b-button>
-          <audio>
-            <source v-bind:src="result.audio" />
-          </audio>
-        </b-card>
+            <button id="lib-btn" @click="addTrack(result.id)"> add to library </button>
+            <audio>
+              <source v-bind:src="result.audio" />
+            </audio>
+          </footer>
+        </div>
       </div>
     </div>
   </div>
@@ -65,8 +56,19 @@ export default {
       results: [],
       data: null,
       audio: null,
-      isActive: true,
+      isActive: false,
     }
+  },
+  watch: {
+    term: function () {
+      if (!this.term) {
+        console.log('Inside if')
+        return (this.isActive = false)
+      }
+      console.log('Outside if')
+      this.search()
+      return (this.isActive = true)
+    },
   },
 
   computed: {
@@ -167,10 +169,12 @@ export default {
 .svg {
   width: 3rem;
 }
+
 button {
   font-weight: 700;
-  background-color: #17a2b8;
+  background-color: transparent;
   color: white;
+  border: none;
 }
 button:hover {
   font-weight: 700;
@@ -199,7 +203,6 @@ body {
 header {
   display: grid;
   color: white;
-  background: #6d25bc;
 }
 
 header h1 {
@@ -215,7 +218,6 @@ header h1 {
   z-index: 50;
 }
 
-
 .input-container {
   max-width: 70%;
   border-radius: 0.3125rem;
@@ -223,6 +225,9 @@ header h1 {
   padding: 0.625rem;
   position: fixed;
   z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input-container input {
@@ -252,7 +257,7 @@ header h1 {
 }
 
 .author {
-  font-size: 1.125rem;
+  font-size: 18px;
   margin-left: 0.125rem;
   color: white;
   display: flex;
@@ -272,10 +277,30 @@ header h1 {
   opacity: 0;
   transform: translateY(1.875rem);
 }
+
 #list-group {
-  padding-right: 15%;
-  max-width: 85%;
-  height: 0;
+  height: max-content;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-item-header {
+  display: flex;
+  background-color: none;
+  justify-content: flex-start;
+  padding: 0rem 1rem 0rem 1rem;
+}
+
+.result-item-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0rem 1rem 0rem 1rem;
+}
+
+#lib-btn {
+  padding-left: 1rem;
 }
 
 .list-animation-leave-active {
@@ -293,10 +318,16 @@ ul {
 
 .mb-2 {
   transition: all 0.5s;
-  background-color: #1e1133;
+  background-color: #231933;
+  padding: 1rem 0rem 1rem 0rem;
 }
-.active {
+
+.inactive {
   display: none;
+}
+
+.active {
+  display: block;
 }
 
 @media only screen and (max-width: 48.125rem) {
@@ -312,7 +343,8 @@ ul {
     width: 100vw;
   }
   img {
-    max-width: 5rem;
+    width: 2rem;
+    height: 100%;
   }
   #list-group {
     max-width: 100%;
@@ -320,7 +352,7 @@ ul {
     top: -2rem;
   }
   .author {
-    font-size: 1.125rem;
+    font-size: 11px;
     text-align: center;
     margin-left: 0.125rem;
     display: table-cell;
