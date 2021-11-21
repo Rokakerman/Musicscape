@@ -16,7 +16,7 @@
         tag="ul"
         name="list-animation"
       >
-        <div class="mb-2" v-for="result in results" :key="result.id">
+        <div class="result-item" v-for="result in results" :key="result.id">
           <header class="result-item-header">
             <img class="card" v-bind:src="result.image" />
             <p class="p author">{{ result.album_name }}</p>
@@ -220,27 +220,30 @@ header h1 {
 
 .input-container {
   max-width: 70%;
-  border-radius: 0.3125rem;
-  background: #1e1133;
-  padding: 0.625rem;
+  border-radius: 0;
+  background: #68687b;
   position: fixed;
   z-index: 50;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: solid white 1px;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+
 }
 
-.input-container input {
-  border: none;
-  background: transparent;
+.input-field {
   color: white;
-  padding: 0.375rem 0.9375rem;
   font-size: 1.125rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #2f2f47;
+  width: 100%;
+  padding-left: 0.5rem;
 }
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #a6b0ba;
+  color: white;
   opacity: 1; /* Firefox */
 }
 
@@ -282,7 +285,6 @@ header h1 {
   height: max-content;
   width: 100%;
   background-color: black;
-  display: flex;
   flex-direction: column;
 }
 
@@ -316,7 +318,7 @@ ul {
   height: 50rem;
 }
 
-.mb-2 {
+.result-item {
   transition: all 0.5s;
   background-color: #231933;
   padding: 1rem 0rem 1rem 0rem;
@@ -327,7 +329,7 @@ ul {
 }
 
 .active {
-  display: block;
+  display: flex;
 }
 
 @media only screen and (max-width: 48.125rem) {
@@ -337,9 +339,13 @@ ul {
   }
   .input-container {
     margin-right: 0;
-    padding: 0;
+    padding-left: 0rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     max-width: 100%;
+    height: 3rem;
     width: 100vw;
   }
   img {
@@ -349,7 +355,6 @@ ul {
   #list-group {
     max-width: 100%;
     position: relative;
-    top: -2rem;
   }
   .author {
     font-size: 11px;
@@ -387,6 +392,7 @@ ul {
     padding-right: 13%;
   }
 }
+
 @media only screen and (min-device-width: 48rem) and (max-device-width: 64rem) {
   .input-container {
     margin-right: 0;
@@ -399,12 +405,16 @@ ul {
     z-index: 50;
   }
 }
+
 @media only screen and (max-width: 48.125rem) {
   #list-group[data-v-7a642ec3] {
     max-width: 100%;
     position: relative;
-    top: -2rem;
     z-index: 50;
+  }
+
+  .input-field {
+    width: 90%;
   }
 }
 </style>
