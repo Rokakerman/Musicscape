@@ -20,7 +20,7 @@
         <img @click="showSearch" v-bind:src="require(`../assets/menu/search-icon.svg`)">
       </li>
     </ul>
-    <Search v-if="showInput" />
+    
   </div>
 </template>
 

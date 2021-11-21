@@ -8,7 +8,20 @@
           placeholder="search..."
           v-model="term"
         />
-        <p>X</p>
+        <svg
+          viewBox="0 0 300 500"
+          width="25"
+          height="25"
+          color="white"
+          v-on:click="closeSearch()"
+        >
+          <path
+            fill="currentColor"
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+          ></path>
+
+          />
+        </svg>
       </div>
 
       <div
@@ -22,19 +35,22 @@
             <img class="card" v-bind:src="result.image" />
             <p class="p author">{{ result.album_name }}</p>
           </header>
-        
+
           <footer class="result-item-footer">
             <button
               id="play-btn"
               @click="
                 $store.commit('setMusic', {
                   url: result.audio,
-                })"
+                })
+              "
             >
               &#9658; Play Sample
             </button>
 
-            <button id="lib-btn" @click="addTrack(result.id)"> add to library </button>
+            <button id="lib-btn" @click="addTrack(result.id)">
+              add to library
+            </button>
             <audio>
               <source v-bind:src="result.audio" />
             </audio>
@@ -104,6 +120,11 @@ export default {
     ...mapActions({
       saveTrack: 'saveTrack',
     }),
+
+    closeSearch: function () {
+      console.log("I am working")
+      return this.$emit('showsearch')
+    },
 
     search: function () {
       let CLIENT_ID = process.env.clientId
@@ -229,7 +250,6 @@ header h1 {
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
-
 }
 
 .input-field {
@@ -342,12 +362,14 @@ ul {
     margin-right: 0;
     padding-left: 0rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     max-width: 100%;
     height: 3rem;
     width: 100vw;
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
   img {
     width: 2rem;

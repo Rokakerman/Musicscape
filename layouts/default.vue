@@ -2,6 +2,7 @@
   <div>
     <div class="layout">
       <Nav :showInput="showSearchBar" v-on:showsearch="showSearch()" />
+      <Search v-if="showSearchBar" v-on:showsearch="showSearch()" />
       <Nuxt />
       <footer class="audio-footer">
       <MusicPlayer />
@@ -14,9 +15,10 @@
 <script>
 import Nav from '../components/Nav_desktop'
 import MusicPlayer from '../components/MusicPlayer'
+import Search from "../components/Search.vue"
 
 export default {
-  components: { Nav, MusicPlayer },
+  components: { Nav, MusicPlayer, Search },
   data: () => {
     return {
       showSearchBar: false,
