@@ -8,6 +8,7 @@
           placeholder="search..."
           v-model="term"
         />
+        <p>X</p>
       </div>
 
       <div
