@@ -127,7 +127,7 @@
           </li>
         </ul>
       </main>
-      <footer class="mobile-footer"><p>Powered by Jamendo</p></footer>
+      <footer class="transparent-footer"></footer>
     </div>
   </div>
 </template>
@@ -249,7 +249,7 @@ export default {
 }
 
 .library {
-  height: 100vh;
+  height: max-content;
 }
 
 header {
@@ -457,6 +457,7 @@ h1 {
   margin: 0px;
   font-size: 12px;
   color: #00ddff;
+  cursor: pointer;
 }
 
 .mini-text-track {
@@ -478,11 +479,12 @@ footer {
   color: #00ddff;
 }
 
-.mobile-footer {
+.transparent-footer {
   background-color: transparent;
   color: #00ddff;
   padding-left: 1.5rem;
   margin-bottom: auto;
+  height: 9rem;
 }
 
 @media only screen and (min-width: 500px) {

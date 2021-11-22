@@ -4,50 +4,59 @@
       <div class="input-container">
         <input
           class="input-field"
-          @click="displayComponent"
           type="text"
-          placeholder="search..."
+          placeholder="Search..."
           v-model="term"
         />
-        <b-button @click="search" type="button" class="btn btn-outline-primary"
-          >Search
-        </b-button>
-        <b-button
-          v-bind:class="{ active: isActive }"
-          @click="hideComponent"
-          size="sm"
-          class="my-2 my-sm-0"
-          type="submit"
-          >Hide list</b-button
-        >
+        <div class="exitSearchBar">
+          <svg
+            viewBox="0 0 300 500"
+            width="25"
+            height="25"
+            v-on:click="closeSearch()"
+          >
+            <path
+              fill="currentColor"
+              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+            ></path>
+
+            />
+          </svg>
+        </div>
       </div>
 
       <div
-        v-bind:class="{ active: isActive }"
+        v-bind:class="{ active: isActive, inactive: !isActive }"
         id="list-group"
         tag="ul"
         name="list-animation"
       >
-        <b-card class="mb-2" v-for="result in results" :key="result.id">
-          <!--create click function to share button-->
+        <div class="result-item" v-for="result in results" :key="result.id">
+          <header class="result-item-header">
+            <img class="card" v-bind:src="result.image" />
+            <p class="p author">{{ result.album_name }}</p>
+          </header>
 
-          <img v-bind:src="result.image" />
-          <span class="author">{{ result.album_name }}</span>
-          <button
-            @click="
-              $store.commit('setMusic', {
-                url: result.audio,
-              })
-            "
-          >
-            &#9658; Play Sample
-          </button>
+          <footer class="result-item-footer">
+            <button
+              id="play-btn"
+              @click="
+                $store.commit('setMusic', {
+                  url: result.audio,
+                })
+              "
+            >
+              <p class="mini-text">Play Sample</p>
+            </button>
 
-          <b-button @click="addTrack(result.id)"> add to library </b-button>
-          <audio>
-            <source v-bind:src="result.audio" />
-          </audio>
-        </b-card>
+            <button id="lib-btn" @click="addTrack(result.id)">
+              <p class="mini-text">Add to library</p>
+            </button>
+            <audio>
+              <source v-bind:src="result.audio" />
+            </audio>
+          </footer>
+        </div>
       </div>
     </div>
   </div>
@@ -65,8 +74,17 @@ export default {
       results: [],
       data: null,
       audio: null,
-      isActive: true,
+      isActive: false,
     }
+  },
+  watch: {
+    term: function () {
+      if (!this.term) {
+        return (this.isActive = false)
+      }
+      this.search()
+      return (this.isActive = true)
+    },
   },
 
   computed: {
@@ -102,6 +120,10 @@ export default {
       saveTrack: 'saveTrack',
     }),
 
+    closeSearch: function () {
+      return this.$emit('showsearch')
+    },
+
     search: function () {
       let CLIENT_ID = process.env.clientId
       if (this.audio) {
@@ -118,7 +140,6 @@ export default {
         .then((res) => {
           this.results = res.results
         })
-      console.log(this.results)
     },
     play: function (s) {
       if (this.audio) {
@@ -140,6 +161,7 @@ export default {
               vm.saveTrack({ email, track })
             }
           }
+          return vm.closeSearch()
         } else {
           console.log('you need to be logged in')
           return (window.location.href = '/login')
@@ -167,17 +189,13 @@ export default {
 .svg {
   width: 3rem;
 }
+
 button {
-  font-weight: 700;
-  background-color: #17a2b8;
+  background-color: transparent;
   color: white;
+  border: none;
 }
-button:hover {
-  font-weight: 700;
-  background-color: #007bff;
-  color: white;
-}
-input:focus,
+button:hover input:focus,
 select:focus,
 textarea:focus,
 button:focus {
@@ -199,7 +217,6 @@ body {
 header {
   display: grid;
   color: white;
-  background: #6d25bc;
 }
 
 header h1 {
@@ -208,34 +225,48 @@ header h1 {
 }
 
 #app-instasearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   place-self: center;
-  width: 37.5rem;
-  position: fixed;
+  width: max-content;
   top: 0;
   z-index: 50;
+  height: 100%;
+  flex-direction: column;
 }
-
 
 .input-container {
-  max-width: 70%;
-  border-radius: 0.3125rem;
-  background: #1e1133;
-  padding: 0.625rem;
-  position: fixed;
-  z-index: 50;
+  border-radius: 0;
+  background: #68687b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 25rem;
+  padding-left: 0.5rem;
+  border-left: solid white 1px;
 }
 
-.input-container input {
-  border: none;
-  background: transparent;
+.input-field {
   color: white;
-  padding: 0.375rem 0.9375rem;
   font-size: 1.125rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #2f2f47;
+  width: 100%;
+  height: 2rem;
+  padding-left: 0.5rem;
+}
+
+.exitSearchBar {
+  display: none;
+  cursor: default;
 }
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #a6b0ba;
+  color: white;
   opacity: 1; /* Firefox */
 }
 
@@ -252,10 +283,11 @@ header h1 {
 }
 
 .author {
-  font-size: 1.125rem;
-  margin-left: 0.125rem;
+  font-size: 14px;
+  margin-left: 0.7rem;
   color: white;
   display: flex;
+  text-align: start;
 }
 
 .title {
@@ -272,17 +304,56 @@ header h1 {
   opacity: 0;
   transform: translateY(1.875rem);
 }
+
 #list-group {
-  padding-right: 15%;
-  max-width: 85%;
-  height: 0;
+  height: max-content;
+  width: 100%;
+  background-color: #231933;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.result-item {
+  transition: all 0.5s;
+  margin-bottom: 1rem;
+  width: 90%;
+  background-color: #231933;
+  padding: 1rem 0rem 1rem 0rem;
+  border-bottom: 1px solid #fafafa65;
+}
+
+.result-item-header {
+  display: flex;
+  background-color: none;
+  justify-content: flex-start;
+  padding: 0rem 1rem 0rem 0rem;
+}
+
+.result-item-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0rem 1rem 0rem 0rem;
+  margin-top: 0.5rem;
+}
+
+#lib-btn {
+  padding-left: 1rem;
 }
 
 .list-animation-leave-active {
   position: absolute;
 }
 img {
-  max-width: 5rem;
+  height: 100%;
+  min-width: 2.6rem;
+  max-width: 2.6rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul {
   background: #3b2460;
@@ -291,12 +362,36 @@ ul {
   height: 50rem;
 }
 
-.mb-2 {
-  transition: all 0.5s;
-  background-color: #1e1133;
+.mini-text {
+  margin: 0px;
+  font-size: 11px;
+  color: #00ddff;
 }
+
+.inactive {
+  display: none !important;
+}
+
 .active {
-  display: none;
+  display: flex;
+}
+
+@media only screen and (min-width: 770px) {
+  #list-group[data-v-7a642ec3] {
+    width: 24rem;
+    background-color: #231933;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0rem;
+    top: 3rem;
+    border-radius: 0% 0% 1% 1%;
+    position: fixed;
+    border: solid #67e0f3 1px;
+    border-top: none;
+    z-index: 4;
+  }
 }
 
 @media only screen and (max-width: 48.125rem) {
@@ -304,75 +399,84 @@ ul {
     margin-left: 0;
     width: 100%;
   }
+
   .input-container {
     margin-right: 0;
-    padding: 0;
+    padding-left: 0rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     max-width: 100%;
+    height: 3rem;
     width: 100vw;
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
+
   img {
-    max-width: 5rem;
+    height: 100%;
+    max-width: 2.4rem;
+    min-width: 2.4rem;
   }
+
   #list-group {
     max-width: 100%;
     position: relative;
-    top: -2rem;
   }
   .author {
-    font-size: 1.125rem;
-    text-align: center;
-    margin-left: 0.125rem;
+    font-size: 12px;
+    margin-left: 0.6rem;
     display: table-cell;
     color: white;
   }
-}
-@media only screen and (min-width: 80.0625rem) {
-  .input-container {
-    margin-left: 17%;
-    padding: 0;
-  }
-  #list-group {
-    margin-left: 17%;
-    padding-right: 13%;
-  }
-  #app-instasearch {
-    margin-left: 60%;
-    /* margin-bottom: 16%; */
-    margin-top: -2.5rem;
+
+  .exitSearchBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    color: white;
+    cursor: pointer;
   }
 }
 
-@media (min-width: 67.1875rem) {
-}
-
-@media (min-width: 64.0625rem) {
-  .input-container {
-    margin-left: 17%;
-  }
-  #list-group {
-    margin-left: 17%;
-    padding-right: 13%;
-  }
-}
-@media only screen and (min-device-width: 48rem) and (max-device-width: 64rem) {
-  .input-container {
-    margin-right: 0;
-    padding: 0;
-    max-width: 50%;
-    width: 100vw;
-  }
-  #list-group[data-v-7a642ec3] {
-    max-width: 65%;
-    z-index: 50;
-  }
-}
 @media only screen and (max-width: 48.125rem) {
   #list-group[data-v-7a642ec3] {
     max-width: 100%;
     position: relative;
-    top: -2rem;
     z-index: 50;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+    padding-bottom: 2rem;
+  }
+
+  .result-item {
+    margin-bottom: 0.2rem;
+  }
+
+  .input-field {
+    width: 90%;
+  }
+
+  #app-instasearch {
+    place-self: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    height: auto;
+    top: 0;
+    border-bottom: 1px solid white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-container {
+    border-left: 0px;
   }
 }
 </style>

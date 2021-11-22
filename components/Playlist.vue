@@ -21,7 +21,7 @@
         </footer>
       </li>
     </ul>
-    <footer class="home-footer"></footer>
+    <footer class="transparent-footer"></footer>
   </div>
 </template>
 
@@ -37,12 +37,9 @@ export default {
     textTruncate: function (str) {
       let length = str.length
       let ending = '...'
-      console.log('hi')
 
       if (length > 25) {
-        console.log(str)
         let newStr = str.slice(0, 25)
-        console.log('hi')
         return newStr.concat(ending)
       } else {
         return str
@@ -202,9 +199,15 @@ button {
   width: max-content;
 }
 
-.home-footer {
+
+.transparent-footer {
+  background-color: transparent;
+  color: #00ddff;
+  padding-left: 1.5rem;
+  margin-bottom: auto;
   height: 9rem;
 }
+
 
 @media only screen and (max-width: 770px) {
   b-card {

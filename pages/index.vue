@@ -15,13 +15,14 @@ export default {
 
 <style>
 .container {
-  margin: 0 auto;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 }
+
 .title {
   font-family: 'Montserrat', sans-serif;
 }
