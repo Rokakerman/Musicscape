@@ -310,9 +310,7 @@ header h1 {
   width: 100%;
   background-color: #231933;
   flex-direction: column;
-  display: flex;
   justify-content: center;
-  align-items: flex-start;
 }
 
 .result-item {
