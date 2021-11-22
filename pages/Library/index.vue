@@ -457,6 +457,7 @@ h1 {
   margin: 0px;
   font-size: 12px;
   color: #00ddff;
+  cursor: pointer;
 }
 
 .mini-text-track {

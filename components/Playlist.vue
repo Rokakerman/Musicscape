@@ -37,12 +37,9 @@ export default {
     textTruncate: function (str) {
       let length = str.length
       let ending = '...'
-      console.log('hi')
 
       if (length > 25) {
-        console.log(str)
         let newStr = str.slice(0, 25)
-        console.log('hi')
         return newStr.concat(ending)
       } else {
         return str

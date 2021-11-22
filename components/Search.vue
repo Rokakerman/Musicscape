@@ -80,10 +80,8 @@ export default {
   watch: {
     term: function () {
       if (!this.term) {
-        console.log('Inside if')
         return (this.isActive = false)
       }
-      console.log('Outside if')
       this.search()
       return (this.isActive = true)
     },
@@ -123,7 +121,6 @@ export default {
     }),
 
     closeSearch: function () {
-      console.log('I am working')
       return this.$emit('showsearch')
     },
 
@@ -143,7 +140,6 @@ export default {
         .then((res) => {
           this.results = res.results
         })
-      console.log(this.results)
     },
     play: function (s) {
       if (this.audio) {
@@ -165,6 +161,7 @@ export default {
               vm.saveTrack({ email, track })
             }
           }
+          return vm.closeSearch()
         } else {
           console.log('you need to be logged in')
           return (window.location.href = '/login')
@@ -198,9 +195,7 @@ button {
   color: white;
   border: none;
 }
-button:hover {
-}
-input:focus,
+button:hover input:focus,
 select:focus,
 textarea:focus,
 button:focus {
@@ -288,10 +283,11 @@ header h1 {
 }
 
 .author {
-  font-size: 18px;
-  margin-left: 0.125rem;
+  font-size: 14px;
+  margin-left: 0.7rem;
   color: white;
   display: flex;
+  text-align: start;
 }
 
 .title {
@@ -321,11 +317,11 @@ header h1 {
 
 .result-item {
   transition: all 0.5s;
-  margin-left: 1rem;
-  width: 20rem;
+  margin-bottom: 1rem;
+  width: 90%;
   background-color: #231933;
   padding: 1rem 0rem 1rem 0rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.527);
+  border-bottom: 1px solid #fafafa65;
 }
 
 .result-item-header {
@@ -350,7 +346,14 @@ header h1 {
   position: absolute;
 }
 img {
-  max-width: 5rem;
+  height: 100%;
+  min-width: 2.6rem;
+  max-width: 2.6rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul {
   background: #3b2460;
@@ -380,11 +383,14 @@ ul {
     flex-direction: column;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     margin-top: 0rem;
     top: 3rem;
+    border-radius: 0% 0% 1% 1%;
     position: fixed;
-    border: 1px solid white;
+    border: solid #67e0f3 1px;
+    border-top: none;
+    z-index: 4;
   }
 }
 
@@ -393,6 +399,7 @@ ul {
     margin-left: 0;
     width: 100%;
   }
+
   .input-container {
     margin-right: 0;
     padding-left: 0rem;
@@ -406,18 +413,20 @@ ul {
     padding-right: 1rem;
     padding-left: 1rem;
   }
+
   img {
-    width: 2rem;
     height: 100%;
+    max-width: 2.4rem;
+    min-width: 2.4rem;
   }
+
   #list-group {
     max-width: 100%;
     position: relative;
   }
   .author {
-    font-size: 11px;
-    text-align: center;
-    margin-left: 0.125rem;
+    font-size: 12px;
+    margin-left: 0.6rem;
     display: table-cell;
     color: white;
   }
@@ -440,9 +449,13 @@ ul {
     z-index: 50;
     height: max-content;
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
     overflow: scroll;
     padding-bottom: 2rem;
+  }
+
+  .result-item {
+    margin-bottom: 0.2rem;
   }
 
   .input-field {

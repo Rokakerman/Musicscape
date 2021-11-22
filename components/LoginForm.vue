@@ -175,12 +175,10 @@ input:active {
   position: relative;
   display: table;
   margin-left: 0.8rem;
-  z-index: 2;
 }
 
 .form-control {
   background-color: #1e1133;
-  z-index: 1;
 }
 
 .form-control:focus,
