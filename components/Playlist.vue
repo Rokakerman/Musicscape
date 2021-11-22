@@ -8,12 +8,12 @@
         class="playlist-item"
       >
         <article class="playlist-preview card">
-          <button v-bind:href="value.shorturl" target="_blank">
-            Go to playlist <img src="~/assets/arrow-right_white.svg" />
-          </button>
-          <button v-bind:href="value.zip">
+          <a class="playlist-redirect"  v-bind:href="value.shorturl" target="_blank">
+           Go to playlist <img src="~/assets/arrow-right_white.svg" />
+          </a>
+          <a class="playlist-redirect" v-bind:href="value.zip" target="_blank">
             Download <img src="~/assets/downloadbutton_white.svg" />
-          </button>
+          </a>
         </article>
         <footer class="playlist-info">
           <p class="mini-text">{{ value.name | textTruncate() }}</p>
@@ -21,7 +21,7 @@
         </footer>
       </li>
     </ul>
-    <footer class="home-footer"></footer>
+    <footer class="transparent-footer"></footer>
   </div>
 </template>
 
@@ -37,12 +37,9 @@ export default {
     textTruncate: function (str) {
       let length = str.length
       let ending = '...'
-      console.log('hi')
 
       if (length > 25) {
-        console.log(str)
         let newStr = str.slice(0, 25)
-        console.log('hi')
         return newStr.concat(ending)
       } else {
         return str
@@ -171,6 +168,14 @@ article {
   align-items: flex-start;
 }
 
+.playlist-redirect {
+  border-radius: 0.2rem;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  color: white;
+}
+
 button {
   border-radius: 0.2rem;
   border: none;
@@ -194,9 +199,15 @@ button {
   width: max-content;
 }
 
-.home-footer {
+
+.transparent-footer {
+  background-color: transparent;
+  color: #00ddff;
+  padding-left: 1.5rem;
+  margin-bottom: auto;
   height: 9rem;
 }
+
 
 @media only screen and (max-width: 770px) {
   b-card {
