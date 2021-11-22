@@ -5,23 +5,24 @@
         <input
           class="input-field"
           type="text"
-          placeholder="search..."
+          placeholder="Search..."
           v-model="term"
         />
-        <svg
-          viewBox="0 0 300 500"
-          width="25"
-          height="25"
-          color="white"
-          v-on:click="closeSearch()"
-        >
-          <path
-            fill="currentColor"
-            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-          ></path>
+        <div class="exitSearchBar">
+          <svg
+            viewBox="0 0 300 500"
+            width="25"
+            height="25"
+            v-on:click="closeSearch()"
+          >
+            <path
+              fill="currentColor"
+              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+            ></path>
 
-          />
-        </svg>
+            />
+          </svg>
+        </div>
       </div>
 
       <div
@@ -45,11 +46,11 @@
                 })
               "
             >
-              &#9658; Play Sample
+              <p class="mini-text">Play Sample</p>
             </button>
 
             <button id="lib-btn" @click="addTrack(result.id)">
-              add to library
+              <p class="mini-text">Add to library</p>
             </button>
             <audio>
               <source v-bind:src="result.audio" />
@@ -122,7 +123,7 @@ export default {
     }),
 
     closeSearch: function () {
-      console.log("I am working")
+      console.log('I am working')
       return this.$emit('showsearch')
     },
 
@@ -193,15 +194,11 @@ export default {
 }
 
 button {
-  font-weight: 700;
   background-color: transparent;
   color: white;
   border: none;
 }
 button:hover {
-  font-weight: 700;
-  background-color: #007bff;
-  color: white;
 }
 input:focus,
 select:focus,
@@ -233,23 +230,27 @@ header h1 {
 }
 
 #app-instasearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   place-self: center;
-  width: 37.5rem;
-  position: fixed;
+  width: max-content;
   top: 0;
   z-index: 50;
+  height: 100%;
+  flex-direction: column;
 }
 
 .input-container {
-  max-width: 70%;
   border-radius: 0;
   background: #68687b;
-  position: fixed;
-  z-index: 50;
-  border: solid white 1px;
-  border-top: 0px;
-  border-right: 0px;
-  border-left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 25rem;
+  padding-left: 0.5rem;
+  border-left: solid white 1px;
 }
 
 .input-field {
@@ -259,7 +260,13 @@ header h1 {
   border-radius: 0.25rem;
   background-color: #2f2f47;
   width: 100%;
+  height: 2rem;
   padding-left: 0.5rem;
+}
+
+.exitSearchBar {
+  display: none;
+  cursor: default;
 }
 
 ::placeholder {
@@ -305,21 +312,34 @@ header h1 {
 #list-group {
   height: max-content;
   width: 100%;
-  background-color: black;
+  background-color: #231933;
   flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.result-item {
+  transition: all 0.5s;
+  margin-left: 1rem;
+  width: 20rem;
+  background-color: #231933;
+  padding: 1rem 0rem 1rem 0rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.527);
 }
 
 .result-item-header {
   display: flex;
   background-color: none;
   justify-content: flex-start;
-  padding: 0rem 1rem 0rem 1rem;
+  padding: 0rem 1rem 0rem 0rem;
 }
 
 .result-item-footer {
   display: flex;
   justify-content: flex-start;
-  padding: 0rem 1rem 0rem 1rem;
+  padding: 0rem 1rem 0rem 0rem;
+  margin-top: 0.5rem;
 }
 
 #lib-btn {
@@ -339,18 +359,33 @@ ul {
   height: 50rem;
 }
 
-.result-item {
-  transition: all 0.5s;
-  background-color: #231933;
-  padding: 1rem 0rem 1rem 0rem;
+.mini-text {
+  margin: 0px;
+  font-size: 11px;
+  color: #00ddff;
 }
 
 .inactive {
-  display: none;
+  display: none !important;
 }
 
 .active {
   display: flex;
+}
+
+@media only screen and (min-width: 770px) {
+  #list-group[data-v-7a642ec3] {
+    width: 24rem;
+    background-color: #231933;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 0rem;
+    top: 3rem;
+    position: fixed;
+    border: 1px solid white;
+  }
 }
 
 @media only screen and (max-width: 48.125rem) {
@@ -386,46 +421,15 @@ ul {
     display: table-cell;
     color: white;
   }
-}
-@media only screen and (min-width: 80.0625rem) {
-  .input-container {
-    margin-left: 17%;
-    padding: 0;
-  }
-  #list-group {
-    margin-left: 17%;
-    padding-right: 13%;
-  }
-  #app-instasearch {
-    margin-left: 60%;
-    /* margin-bottom: 16%; */
-    margin-top: -2.5rem;
-  }
-}
 
-@media (min-width: 67.1875rem) {
-}
-
-@media (min-width: 64.0625rem) {
-  .input-container {
-    margin-left: 17%;
-  }
-  #list-group {
-    margin-left: 17%;
-    padding-right: 13%;
-  }
-}
-
-@media only screen and (min-device-width: 48rem) and (max-device-width: 64rem) {
-  .input-container {
-    margin-right: 0;
-    padding: 0;
-    max-width: 50%;
-    width: 100vw;
-  }
-  #list-group[data-v-7a642ec3] {
-    max-width: 65%;
-    z-index: 50;
+  .exitSearchBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    color: white;
+    cursor: pointer;
   }
 }
 
@@ -434,10 +438,32 @@ ul {
     max-width: 100%;
     position: relative;
     z-index: 50;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    overflow: scroll;
+    padding-bottom: 2rem;
   }
 
   .input-field {
     width: 90%;
+  }
+
+  #app-instasearch {
+    place-self: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    height: auto;
+    top: 0;
+    border-bottom: 1px solid white;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-container {
+    border-left: 0px;
   }
 }
 </style>

@@ -86,6 +86,11 @@ export default {
         this.changePage("search")
       }
       this.$emit('showsearch');
+    },
+
+    focus: function() {
+      console.log("Hejsan")
+      return this.changePage("")
     }
   },
 }

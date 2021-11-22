@@ -2,12 +2,17 @@
   <div>
     <div class="layout">
       <Nav :showInput="showSearchBar" v-on:showsearch="showSearch()" />
-      <Search v-if="showSearchBar" v-on:showsearch="showSearch()" />
-      <Nuxt />
-      <footer class="audio-footer">
-      <MusicPlayer />
-      </footer>
-      <LazyMobileNav v-on:showsearch="showSearch()" />
+      <Search
+        class="toggleDesktop"
+        v-if="showSearchBar"
+        v-on:showsearch="closeSearch()"
+      />
+      <Nuxt class="desktop" />
+      <footer class="global-footer"><p>Powered by Jamendo</p></footer>
+      <div class="audio-footer">
+        <MusicPlayer />
+      </div>
+      <LazyMobileNav ref="usernameInput" v-on:showsearch="showSearch()" />
     </div>
   </div>
 </template>
@@ -15,7 +20,7 @@
 <script>
 import Nav from '../components/Nav_desktop'
 import MusicPlayer from '../components/MusicPlayer'
-import Search from "../components/Search.vue"
+import Search from '../components/Search.vue'
 
 export default {
   components: { Nav, MusicPlayer, Search },
@@ -27,7 +32,12 @@ export default {
 
   methods: {
     showSearch() {
-      this.showSearchBar = !this.showSearchBar
+      return (this.showSearchBar = !this.showSearchBar)
+    },
+
+    closeSearch: function () {
+      this.showSearch()
+      return this.$refs.usernameInput.focus()
     },
   },
 }
@@ -38,6 +48,15 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.global-footer {
+  background-color: transparent;
+  color: #00ddff;
+  padding-left: 1.5rem;
+  margin-bottom: auto;
+  position: relative;
+  bottom: 5.5rem;
 }
 
 html {
@@ -101,6 +120,7 @@ body {
 }
 
 @media only screen and (min-width: 770px) {
+
   .audio-footer {
     width: 100%;
     background-color: #2f2f47; /* ##1e1133 */
@@ -113,7 +133,26 @@ body {
     border: solid 1px rgba(255, 255, 255, 0.274);
     border-bottom: 0px;
     border-left: 0px;
-    border-right: 0px
+    border-right: 0px;
+  }
+
+  .toggleDesktop {
+    display: none;
+  }
+
+  .desktop {
+    margin-top: 3rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .global-footer {
+    background-color: transparent;
+    color: #00ddff;
+    padding-left: 1.5rem;
+    margin-bottom: auto;
+    position: fixed;
+    bottom: 4rem;
   }
 }
 </style>

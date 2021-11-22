@@ -21,7 +21,7 @@
         </footer>
       </li>
     </ul>
-    <footer class="home-footer"></footer>
+    <footer class="transparent-footer"></footer>
   </div>
 </template>
 
@@ -202,9 +202,15 @@ button {
   width: max-content;
 }
 
-.home-footer {
+
+.transparent-footer {
+  background-color: transparent;
+  color: #00ddff;
+  padding-left: 1.5rem;
+  margin-bottom: auto;
   height: 9rem;
 }
+
 
 @media only screen and (max-width: 770px) {
   b-card {
