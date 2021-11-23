@@ -27,7 +27,7 @@
 
       <div
         v-bind:class="{ active: isActive, inactive: !isActive }"
-        id="list-group"
+        class="list-group"
         tag="ul"
         name="list-animation"
       >
@@ -305,7 +305,7 @@ header h1 {
   transform: translateY(1.875rem);
 }
 
-#list-group {
+.list-group {
   height: max-content;
   width: 100%;
   background-color: #231933;
@@ -375,7 +375,7 @@ ul {
 }
 
 @media only screen and (min-width: 770px) {
-  #list-group[data-v-7a642ec3] {
+  .list-group {
     width: 24rem;
     background-color: #231933;
     flex-direction: column;
@@ -418,7 +418,7 @@ ul {
     min-width: 2.4rem;
   }
 
-  #list-group {
+  .list-group {
     max-width: 100%;
     position: relative;
   }
@@ -441,7 +441,7 @@ ul {
 }
 
 @media only screen and (max-width: 48.125rem) {
-  #list-group[data-v-7a642ec3] {
+  .list-group {
     max-width: 100%;
     position: relative;
     z-index: 50;
