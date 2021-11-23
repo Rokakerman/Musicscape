@@ -34,7 +34,8 @@
         <div class="result-item" v-for="result in results" :key="result.id">
           <header class="result-item-header">
             <img class="card" v-bind:src="result.image" />
-            <p class="p author">{{ result.album_name }}</p>
+            <p class="p author">{{ result.name | trackPreviewTruncate() }}</p>
+        
           </header>
 
           <footer class="result-item-footer">
@@ -87,6 +88,22 @@ export default {
     },
   },
 
+  filters: {
+    trackPreviewTruncate: function (str) {
+      let length = str.length
+      let ending = '...'
+
+      if (length > 60) {
+        console.log(str)
+        let newStr = str.slice(0, 60)
+        console.log('hi')
+        return newStr.concat(ending)
+      } else {
+        return str
+      }
+    },
+  },
+
   computed: {
     ...mapState(['credentialsExist']),
     filteredFeed: function () {
@@ -132,7 +149,7 @@ export default {
       }
 
       fetch(
-        `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&search=${encodeURIComponent(
+        `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&namesearch=${encodeURIComponent(
           this.term
         )}&limit=5&order=downloads_week&groupby=artist_id`
       )
@@ -149,6 +166,7 @@ export default {
       this.audio = new Audio(s)
       this.audio.play()
     },
+
     addTrack: async function (trackId) {
       let vm = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
